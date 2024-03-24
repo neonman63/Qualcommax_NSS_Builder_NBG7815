@@ -7,12 +7,12 @@ on:
     - cron: "0 */2 * * *"
 
 env:
-  REMOTE_REPOSITORY: qosmio/openwrt-ipq
-  REMOTE_BRANCH: qualcommax-6.1-nss-wifi
-  CONFIG_FILE: ax3600.config
+  REMOTE_REPOSITORY: neonman63/openwrt-asvio
+  REMOTE_BRANCH: nbg7815-k6.6
+  CONFIG_FILE: nbg7815.config
   NSS_STATUS_PATCH: 999-add-nss-load-to-status.patch
   CUSTOM_FILES_PATH: files/
-  RELEASE_PREFIX: Qualcommax-6.1-nss-wifi
+  RELEASE_PREFIX: Qualcommax-6.6-nss
 
 jobs:
   check_commits:
@@ -50,7 +50,7 @@ jobs:
       - name: Checkout custom repository
         uses: actions/checkout@v4
         with:
-          repository: "starraiderx/Qualcommax_NSS_Builder"
+          repository: "neonman63/Qualcommax_NSS_Builder_NBG7815"
           path: "custom_repo"
       - name: Update and install feeds
         run: |
@@ -76,9 +76,8 @@ jobs:
           uci set wireless.radio0.country='US'
           uci set wireless.radio1.country='US'
           uci set wireless.radio2.country='US'
-          uci set wireless.radio1.htmode='HE160'
+          uci set wireless.radio1.htmode='HE80'
           uci set wireless.radio1.channel='44'
-          uci del firewall.cfg01e63d.flow_offloading
           uci commit
           EOF
       - name: Build the firmware image
